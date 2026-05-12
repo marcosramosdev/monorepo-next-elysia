@@ -1,5 +1,5 @@
 {
-  "extends": "config/tsconfig.json",
+  "extends": "config/typescript",
   "compilerOptions": {
     "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],

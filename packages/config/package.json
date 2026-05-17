@@ -1,5 +1,5 @@
 {
-  "name": "config",
+  "name": "@monorepo-elysia-next-todo-app/config",
   "version": "1.0.0",
   "description": "configuração compartilhada para os projetos",
   "scripts": {

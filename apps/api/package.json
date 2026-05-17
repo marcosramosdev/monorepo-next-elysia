@@ -2,15 +2,16 @@
   "name": "api",
   "version": "1.0.50",
   "scripts": {
-    "dev": "bun run --watch src/index.ts",
+    "dev": "bun run --watch src/app.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@elysiajs/swagger": "^1.3.1",
     "elysia": "latest"
   },
   "devDependencies": {
-    "bun-types": "latest",
-    "config": "workspace:*"
+    "@monorepo-elysia-next-todo-app/config": "workspace:*",
+    "bun-types": "latest"
   },
   "module": "src/index.js"
 }

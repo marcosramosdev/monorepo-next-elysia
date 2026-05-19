@@ -1,8 +1,10 @@
-import { TodoModel } from "../modules/todos/model";
-
-export const todos: TodoModel["todo"][] = [
-  {
-    id: 1,
-    title: "first todo",
+import { drizzle } from "drizzle-orm/node-postgres";
+import { env } from "@/env";
+// You can specify any property from the node-postgres connection options
+export const db = drizzle({
+  connection: {
+    connectionString: env.DATABASE_URL!,
+    ssl: true,
   },
-];
+  casing: "snake_case",
+});

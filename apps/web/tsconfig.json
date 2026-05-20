@@ -1,5 +1,5 @@
 {
-  "extends": "@monorepo-elysia-next-todo-app/config/typescript",
+  "extends": "config/tsconfig.json",
   "compilerOptions": {
     "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],

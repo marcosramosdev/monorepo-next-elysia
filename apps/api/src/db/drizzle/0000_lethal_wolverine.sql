@@ -3,6 +3,6 @@ CREATE TABLE "todos" (
 	"title" text NOT NULL,
 	"description" text,
 	"completed" boolean DEFAULT false NOT NULL,
-	"createdAt" timestamp DEFAULT now() NOT NULL,
-	"updatedAt" timestamp DEFAULT now() NOT NULL
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL
 );

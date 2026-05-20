@@ -9,7 +9,8 @@ Bun.build({
     syntax: true,
   },
   compile: {
-    target: env.BUILD_TARGET ? "bun-linux-x64" : "bun-windows-x64",
+    target:
+      env.BUILD_TARGET === "development" ? "bun-windows-x64" : "bun-linux-x64",
     outfile: "server",
   },
 });

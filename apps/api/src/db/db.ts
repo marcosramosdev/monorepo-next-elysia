@@ -1,10 +1,8 @@
-import { drizzle } from "drizzle-orm/node-postgres";
+import { drizzle } from "drizzle-orm/bun-sql";
 import { env } from "@/env";
-// You can specify any property from the node-postgres connection options
-export const db = drizzle({
-  connection: {
-    connectionString: env.DATABASE_URL!,
-    ssl: true,
-  },
+import * as schema from "./schema/index";
+
+export const db = drizzle(env.DATABASE_URL!, {
   casing: "snake_case",
+  schema,
 });

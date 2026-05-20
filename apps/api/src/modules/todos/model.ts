@@ -1,34 +1,34 @@
-import { t, UnwrapSchema } from "elysia";
+import { z } from "zod";
 
 export const todoModel = {
-  todo: t.Object({
-    id: t.Number(),
-    title: t.String(),
-    description: t.Optional(t.String()),
-    completed: t.Optional(t.Boolean({ default: false })),
-    createdAt: t.Optional(t.Date({ default: new Date() })),
+  todo: z.object({
+    id: z.string(),
+    title: z.string(),
+    description: z.string().nullable(),
+    completed: z.boolean(),
+    createdAt: z.date(),
+    updatedAt: z.date(),
   }),
-  createBody: t.Object({
-    title: t.String(),
-    description: t.Optional(t.String()),
+  createBody: z.object({
+    title: z.string(),
+    description: z.string().optional(),
   }),
-  updateBody: t.Object({
-    title: t.Optional(t.String()),
-    description: t.Optional(t.String()),
-    completed: t.Optional(t.Boolean()),
+  updateBody: z.object({
+    title: z.string().optional(),
+    description: z.string().optional(),
+    completed: z.boolean().optional(),
   }),
-  params: t.Object({
-    id: t.Number(),
+  params: z.object({
+    id: z.uuid(),
   }),
-  errorResponse: t.Object({
-    error: t.String(),
+  errorResponse: z.object({
+    error: z.string(),
   }),
-  deleteResponse: t.Object({
-    deleted: t.Boolean(),
+  deleteResponse: z.object({
+    deleted: z.boolean(),
   }),
 } as const;
 
-// Or make the entire object as type
 export type TodoModel = {
-  [k in keyof typeof todoModel]: UnwrapSchema<(typeof todoModel)[k]>;
+  [k in keyof typeof todoModel]: z.infer<(typeof todoModel)[k]>;
 };

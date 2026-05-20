@@ -1,49 +1,22 @@
-import { Elysia, t } from "elysia";
-import { swagger } from "@elysiajs/swagger";
+import { Elysia } from "elysia";
 import { todosRoute } from "./modules/todos/index";
+import { betterAuthMacro } from "./macros/betterAuthMacro";
+import { auth } from "./lib/auth";
+import { openapi } from "@elysia/openapi";
+import { OpenAPI } from "./lib/openapi";
 
 const app = new Elysia()
+  .get("/", () => "Hello World")
   .use(
-    swagger({
-      path: "/docs",
+    openapi({
+      documentation: {
+        components: await OpenAPI.components,
+        paths: await OpenAPI.getPaths(),
+      },
     }),
   )
-  .get("/", () => {
-    return "Hello, World!";
-  })
-  .get("/auth", ({ query: { name } }) => `Welcome ${name}`, {
-    headers: t.Object({
-      "api-token": t.String(),
-    }),
-    beforeHandle({ request, set }) {
-      const token = request.headers.get("api-token");
-      if (token !== "5LEnc5WYU68YEGgb81tKk6t5TTBhOrWB") {
-        set.status = 401;
-        return { error: "Unauthorized" };
-      }
-      return;
-    },
-    response: {
-      200: t.String(),
-      401: t.Object({ error: t.String() }),
-    },
-  })
-  .guard({
-    beforeHandle({ request, set }) {
-      console.log(request.url);
-      const auth = request.headers.get("authorization");
-      if (auth !== "5LEnc5WYU68YEGgb81tKk6t5TTBhOrWB") {
-        set.status = 401;
-        return { error: "Unauthorized" };
-      }
-      set.status = 200;
-      return "Authorized";
-    },
-    response: {
-      401: t.Object({ error: t.String() }),
-      200: t.String(),
-    },
-  })
+  .mount("/auth", auth.handler)
+  .use(betterAuthMacro)
   .use(todosRoute)
   .listen(3001);
 
